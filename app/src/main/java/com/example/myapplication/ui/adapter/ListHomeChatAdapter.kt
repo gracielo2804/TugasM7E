@@ -38,11 +38,15 @@ class ListHomeChatAdapter(val callback:ListChatFriendCallback,val  usernameLogin
 
         fun bind(friendsEntity: FriendsEntity){
             var usernameFriend=""
+            var namefriend=""
             if(friendsEntity.username1==usernameLogin)usernameFriend=friendsEntity.username2
             else usernameFriend=friendsEntity.username1
 
             for(i in listUser){
-                if(i.username==usernameFriend)txtName.text=i.name
+                if(i.username==usernameFriend){
+                    txtName.text=i.name;
+                    namefriend=i.name
+                }
             }
             var isiChat="(Empty Chat Room)"
 
@@ -53,7 +57,7 @@ class ListHomeChatAdapter(val callback:ListChatFriendCallback,val  usernameLogin
             }
             txtChat.text=isiChat
             view.setOnClickListener {
-                callback.onChatClicked(usernameFriend)
+                callback.onChatClicked(usernameFriend,namefriend)
             }
         }
 
@@ -71,7 +75,7 @@ class ListHomeChatAdapter(val callback:ListChatFriendCallback,val  usernameLogin
     }
 
     interface ListChatFriendCallback {
-        fun onChatClicked(usernameFriend:String)
+        fun onChatClicked(usernameFriend:String,namaFriend:String)
     }
 
 

@@ -63,11 +63,11 @@ interface DBDao {
     suspend fun delete(user: ChatEntity)
 
     @Query("DELETE FROM chat where id = :id")
-    suspend fun deleteKelas(id: String)
+    suspend fun deleteChat(id: String)
 
 
     @Query("SELECT * FROM chat")
-    suspend fun getKelas():List<ChatEntity>
+    suspend fun getChat():List<ChatEntity>
 
 
 

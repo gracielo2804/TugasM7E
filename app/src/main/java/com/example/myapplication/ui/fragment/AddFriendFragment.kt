@@ -53,6 +53,12 @@ class AddFriendFragment(val usernameLogin:String,val namalogin:String) : Fragmen
             adapter=adapters
             layoutManager=LinearLayoutManager(this.context)
         }
+        binding.btnSearch.setOnClickListener {
+            usernameSearch=binding.etSearchUsername.text.toString()
+            refreshAllData()
+        }
+        binding.txtResultSearch.text="Result (0)"
+
     }
 
     override fun onAddFriend(usernameAdd: String) {
@@ -61,6 +67,13 @@ class AddFriendFragment(val usernameLogin:String,val namalogin:String) : Fragmen
             dao.insert(friend)
             refreshAllData()
         }
+        adapters=ListSearchFriendAdapter(this,usernameLogin)
+        binding.rvSearchResult.apply {
+            adapter=adapters
+            layoutManager= LinearLayoutManager(this.context)
+        }
+
+        refreshAllData()
     }
 
     fun refreshAllData(){
@@ -78,13 +91,16 @@ class AddFriendFragment(val usernameLogin:String,val namalogin:String) : Fragmen
         var tempFriend=listFriend
         var tempKirim= arrayListOf<UserEntity>()
         for(i in temp){
-            if(i.username.contains(usernameSearch)){
-                tempKirim.add(i)
+            if(i.username!=usernameLogin){
+                if(i.username.contains(usernameSearch)){
+                    tempKirim.add(i)
+                }
             }
         }
 
         adapters.setDataUser(tempKirim)
         adapters.setDataFriend(tempFriend)
+        binding.txtResultSearch.text="Result (${tempKirim.size})"
     }
 
 

@@ -45,13 +45,22 @@ class AppActivity : AppCompatActivity() {
 
         fragmentManager=supportFragmentManager.beginTransaction()
         addFriendFragment= AddFriendFragment(usernamelogin,namalogin)
-        chatFragment=ChatFragment(usernamelogin,namalogin,"")
+        chatFragment=ChatFragment(usernamelogin,namalogin,"","")
         homeFragment=HomeFragment(usernamelogin,namalogin)
 
         val navView: BottomNavigationView = binding.bottomNav
         homeFragment.arguments = bundle
         fragmentManager.replace(R.id.containerFragment,homeFragment)
         fragmentManager.commit()
+
+        homeFragment.onFriendClickListener={ usernameFriend,namaFriend ->
+            fragmentManager = supportFragmentManager.beginTransaction()
+            chatFragment=ChatFragment(usernamelogin,namalogin, usernameFriend,namaFriend)
+            addFriendFragment.arguments = bundle
+            fragmentManager.replace(R.id.containerFragment,chatFragment)
+            fragmentManager.commit()
+            true
+        }
 
         navView.setOnItemSelectedListener {
             when(it.itemId){
